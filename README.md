@@ -18,13 +18,13 @@ TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
 
 ## Add Placeholder text
 ```swift
-        ZStack(alignment: .topLeading) {
-            TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
-                .frame(height: 100)
-            if text.isEmpty {
-                Text("Type something...")
-                    .foregroundColor(.secondary)
-                    .offset(x: 5, y: 5)
-            }
+ZStack(alignment: .topLeading) {
+    TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
+        .frame(height: 100)
+    if text.isEmpty {
+        Text("Type something...")
+            .foregroundColor(.secondary)
+            .offset(x: 5, y: 5)
         }
+    }
 ```
