@@ -7,15 +7,65 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
+    @State var text: String = "This is a testing text."
     var body: some View {
-        Text("Hello, World!")
+        ZStack(alignment: .topLeading) {
+            TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
+                .frame(height: 100)
+            if text.isEmpty {
+                Text("Type something...")
+                    .foregroundColor(.secondary)
+                    .offset(x: 5, y: 5)
+            }
+        }
+            
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+
+struct TextView: UIViewRepresentable {
+    @Binding var text: String
+    var isScrollEnabled: Bool = true
+    var font: UIFont? = UIFont.systemFont(ofSize: 17)
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+    
+    func makeUIView(context: Context) -> UITextView {
+        let uiTextView = UITextView()
+        uiTextView.isScrollEnabled = self.isScrollEnabled
+        uiTextView.text = self.text
+        uiTextView.font = self.font
+        // add text view delegate
+        uiTextView.delegate = context.coordinator
+        return uiTextView
+    }
+    
+    func updateUIView(_ uiTextView: UITextView, context: Context) {
+        uiTextView.text = self.text
+    }
+    
+    typealias UIViewType = UITextView
+    
+    class Coordinator: NSObject, UITextViewDelegate {
+        let control: TextView
+        
+        init(_ control: TextView) {
+            self.control = control
+        }
+        
+        func textViewDidChange(_ textView: UITextView) {
+            control.text = textView.text
+        }
     }
 }
