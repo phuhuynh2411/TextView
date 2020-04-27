@@ -26,5 +26,5 @@ ZStack(alignment: .topLeading) {
             .foregroundColor(.secondary)
             .offset(x: 5, y: 5)
         }
-    }
+}
 ```
