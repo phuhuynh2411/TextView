@@ -28,3 +28,8 @@ ZStack(alignment: .topLeading) {
         }
 }
 ```
+## More simpler way to add the placeholder for the text view
+```swift
+PlaceholderTextView("Description", text: self.$text)
+
+
