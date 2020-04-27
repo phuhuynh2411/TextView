@@ -87,7 +87,7 @@ struct PlaceholderTextView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
+            TextView(text: $text, isScrollEnabled: self.isScrollEnabled, font: self.font)
             if text.isEmpty {
                 Text(self.placeholder)
                     .foregroundColor(.secondary)
