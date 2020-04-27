@@ -18,7 +18,6 @@ struct ContentView: View {
             if text.isEmpty {
                 Text("Type something...")
                     .foregroundColor(.secondary)
-                    .offset(x: 5, y: 5)
             }
         }
             
@@ -46,6 +45,9 @@ struct TextView: UIViewRepresentable {
         uiTextView.isScrollEnabled = self.isScrollEnabled
         uiTextView.text = self.text
         uiTextView.font = self.font
+        // remove all UITextView's padding
+        uiTextView.textContainerInset = .zero
+        uiTextView.textContainer.lineFragmentPadding = 0
         // add text view delegate
         uiTextView.delegate = context.coordinator
         return uiTextView
@@ -66,6 +68,30 @@ struct TextView: UIViewRepresentable {
         
         func textViewDidChange(_ textView: UITextView) {
             control.text = textView.text
+        }
+    }
+}
+
+struct PlaceholderTextView: View {
+    var placeholder: String = ""
+    @Binding var text: String
+    var isScrollEnabled: Bool = true
+    var font: UIFont? = UIFont.systemFont(ofSize: 17)
+    
+    init(_ placeholder: String = "", text: Binding<String>, isScrollEnabled: Bool = true, font: UIFont = UIFont.systemFont(ofSize: 17)) {
+        self.placeholder = placeholder
+        self._text = text
+        self.isScrollEnabled = isScrollEnabled
+        self.font = font
+    }
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            TextView(text: $text, font: UIFont.systemFont(ofSize: 17))
+            if text.isEmpty {
+                Text(self.placeholder)
+                    .foregroundColor(.secondary)
+            }
         }
     }
 }
